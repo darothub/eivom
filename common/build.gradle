@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id "org.jmailen.kotlinter"
 }
 
 android {
@@ -30,7 +31,21 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
 }
+kotlinter {
+    ignoreFailures = false
+    indentSize = 4
+    reporters = ['checkstyle', 'plain']
+    experimentalRules = false
+    disabledRules = ["no-wildcard-imports"]
+}
+preBuild.dependsOn(formatKotlin)
 
 dependencies {
 
