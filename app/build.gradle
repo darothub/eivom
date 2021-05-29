@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id "org.jmailen.kotlinter"
+    id "androidx.navigation.safeargs.kotlin"
 }
 
 android {
@@ -47,8 +48,9 @@ kotlinter {
 preBuild.dependsOn(formatKotlin)
 
 dependencies {
-    implementation project(":navigation")
     implementation project(':common')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     coreLibraryDesugaring coreLibDesugaring
     testImplementation testLibraries
