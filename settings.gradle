@@ -1,2 +1,5 @@
+include ':common'
+include ':navigation'
+include ':data'
 include ':app'
 rootProject.name = "Eivom"

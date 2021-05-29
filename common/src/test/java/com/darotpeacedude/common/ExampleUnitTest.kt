@@ -1,4 +1,4 @@
-package com.darotpeacedude.eivom
+package com.darotpeacedude.common
 
 import org.junit.Assert.*
 import org.junit.Test

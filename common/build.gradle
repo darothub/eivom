@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
     id "org.jmailen.kotlinter"
 }
@@ -8,18 +8,14 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
-    buildFeatures {
-        viewBinding true
-    }
-
     defaultConfig {
-        applicationId "com.darotpeacedude.eivom"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -29,12 +25,17 @@ android {
         }
     }
     compileOptions {
-        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
 }
 kotlinter {
@@ -47,9 +48,8 @@ kotlinter {
 preBuild.dependsOn(formatKotlin)
 
 dependencies {
-    implementation project(":navigation")
-    implementation project(':common')
 
+    api libs
     coreLibraryDesugaring coreLibDesugaring
     testImplementation testLibraries
     androidTestImplementation androidTestLibraries

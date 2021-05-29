@@ -1,4 +1,4 @@
-package com.darotpeacedude.eivom
+package com.darotpeacedude.common
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -17,6 +17,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.darotpeacedude.eivom", appContext.packageName)
+        assertEquals("com.darotpeacedude.common.test", appContext.packageName)
     }
 }
