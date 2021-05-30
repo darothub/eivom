@@ -1,4 +1,4 @@
-include ':common'
+include ':core'
 include ':navigation'
 include ':data'
 include ':app'

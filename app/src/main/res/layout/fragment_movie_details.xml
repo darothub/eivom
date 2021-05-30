@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.MovieDetailsFragment">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/purple_200"
+        android:elevation="@dimen/_10sdp"
+        android:alpha=".8"
+        />
+
+    <ImageView
+        android:id="@+id/blur_bg_iv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/sample_image"
+        android:scaleType="centerCrop"
+        />
+
+    <ImageView
+        android:id="@+id/backbtn_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_3sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:src="@drawable/ic_baseline_keyboard_backspace_24"
+        android:elevation="@dimen/_10sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/circle_primary"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <include
+        android:id="@+id/bs"
+        layout="@layout/movie_bottom_layout" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

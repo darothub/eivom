@@ -10,4 +10,9 @@
         android:name="com.darotpeacedude.eivom.ui.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/movieDetailsFragment"
+        android:name="com.darotpeacedude.eivom.ui.MovieDetailsFragment"
+        android:label="fragment_movie_details"
+        tools:layout="@layout/fragment_movie_details" />
 </navigation>
