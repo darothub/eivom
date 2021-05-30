@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.darotpeacedude.data.utils.Parent
 import java.io.Serializable
 @Entity
-data class Movie (
+data class Movie(
     val adult: Boolean,
     @ColumnInfo(name="backdrop_path")
     val backdropPath: String,
@@ -21,5 +21,5 @@ data class Movie (
     val releaseDate: String,
     val title: String,
     @ColumnInfo(name="vote_average")
-    val voteAverage: Long,
+    val voteAverage: Double,
 ): Serializable, Parent

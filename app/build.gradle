@@ -4,6 +4,8 @@ plugins {
     id "org.jmailen.kotlinter"
     id "androidx.navigation.safeargs.kotlin"
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+
 }
 
 android {
@@ -50,6 +52,7 @@ preBuild.dependsOn(formatKotlin)
 
 dependencies {
     implementation project(':core')
+    implementation libs
     kapt kaptLibs
     coreLibraryDesugaring coreLibDesugaring
     testImplementation testLibraries

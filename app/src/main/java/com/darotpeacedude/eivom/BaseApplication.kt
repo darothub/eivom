@@ -1,4 +1,4 @@
-package com.darotpeacedude.core.di
+package com.darotpeacedude.eivom
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
