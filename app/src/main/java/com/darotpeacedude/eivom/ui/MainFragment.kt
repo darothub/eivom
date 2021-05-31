@@ -87,8 +87,25 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             movieAdapter.setData(local.toList())
             setupList()
         } else {
-            setPagingList()
-            setupPagingView()
+            mainViewModel.netWorkStateFlow.collectLatest {
+                if (it) {
+                    progressBarUpdate.update(false)
+                    setPagingList()
+                    setupPagingView()
+                } else {
+                    if (local.isNotEmpty()) {
+                        setupList()
+                    } else {
+                        progressBarUpdate.update(true)
+                        Toast.makeText(
+                            requireContext(),
+                            "There is no network",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                }
+            }
         }
     }
 

@@ -2,8 +2,6 @@ package com.darotpeacedude.core.utils
 
 import android.app.Activity
 import android.os.Build
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
@@ -81,24 +79,5 @@ fun Activity.hideSystemUI() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
-        @Suppress("DEPRECATION")
-        window.decorView.setOnSystemUiVisibilityChangeListener { visibility ->
-            // Note that system bars will only be "visible" if none of the
-            // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
-
-            if (visibility and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {
-                Handler(Looper.getMainLooper()).postDelayed(
-                    {
-                        @Suppress("DEPRECATION")
-                        window.decorView.systemUiVisibility = (
-                            View.SYSTEM_UI_FLAG_FULLSCREEN
-                                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-
-                            )
-                    },
-                    3000
-                )
-            }
-        }
     }
 }
