@@ -35,6 +35,15 @@
         app:layout_constraintStart_toStartOf="parent"
         />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:layout_gravity="center_vertical|center_horizontal"
+        app:lottie_rawRes="@raw/swipe_up_arrows" />
+
     <include
         android:id="@+id/bs"
         layout="@layout/movie_bottom_layout" />

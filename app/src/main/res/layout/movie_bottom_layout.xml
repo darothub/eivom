@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:elevation="@dimen/_100sdp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-
+    app:behavior_peekHeight = "250dp"
     >
 
     <androidx.constraintlayout.widget.Guideline
@@ -22,7 +22,7 @@
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_130sdp"
         android:layout_marginStart="@dimen/_15sdp"
-        android:background="@color/purple_500"
+        android:background="@drawable/rounded_border_with_backgrnd"
         android:elevation="@dimen/_10sdp"
         android:src="@drawable/sample_image"
         android:scaleType="centerCrop"

@@ -16,7 +16,7 @@ class MovieViewHolder(private val binding: MovieItemLayoutBinding) : RecyclerVie
      * Items might be null if they are not paged in yet. PagedListAdapter will re-bind the
      * ViewHolder when Item is loaded.
      */
-    fun bindTo(movie: Movie?) {
+    fun bindTo(movie: Movie?, listener: (Movie) -> Unit) {
         this.movie = movie
         binding.movieIv.load(Constant.BASE_IMAGE_URL + movie?.backdropPath) {
             crossfade(true)
@@ -24,5 +24,13 @@ class MovieViewHolder(private val binding: MovieItemLayoutBinding) : RecyclerVie
             transformations(RoundedCornersTransformation(10F, 10F, 10F, 10F))
         }
         binding.movieIv.clipToOutline = true
+        binding.movieTitleTv.text = movie?.title
+        binding.movieStoryTv.text = movie?.overview
+        binding.movieRatingTv.text = "${movie?.voteAverage}"
+        binding.root.setOnClickListener {
+            if (movie != null) {
+                listener(movie)
+            }
+        }
     }
 }

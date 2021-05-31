@@ -13,5 +13,7 @@ interface RepositoryInterface {
     suspend fun saveMovies(movies:List<Movie>)
     suspend fun getRemoteData(page:Int):ResultList
     fun allMovies():Flow<PagingData<Movie>>
+    fun allTheMovies():Array<Movie>
+    fun local():PagingSource<Int, Movie>
 
 }

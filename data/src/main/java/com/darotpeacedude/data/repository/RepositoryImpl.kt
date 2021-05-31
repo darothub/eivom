@@ -2,7 +2,10 @@ package com.darotpeacedude.data.repository
 
 import androidx.lifecycle.asFlow
 import androidx.paging.*
-import com.darotpeacedude.data.local.*
+import com.darotpeacedude.data.local.Movie
+import com.darotpeacedude.data.local.MovieDao
+import com.darotpeacedude.data.local.MovieDatabase
+import com.darotpeacedude.data.local.ResultList
 import com.darotpeacedude.data.remote.NetworkService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,14 +28,21 @@ class RepositoryImpl @Inject constructor(
         return networkService.getMovies(page=page)
     }
 
-    override fun allMovies(): Flow<PagingData<Movie>>  {
-       return Pager(
-            config = PagingConfig(pageSize = 6, enablePlaceholders = false),
-            remoteMediator = MovieRemoteMediator(networkService, movieDatabase),
-            pagingSourceFactory = {movieDatabase.movieDao().allMovies()}
-        ).flow
+    override fun allMovies(): Flow<PagingData<Movie>> = flow{
+        Pager(
+            config = PagingConfig(pageSize = 6),
+            pagingSourceFactory = {PagingDataRepository(networkService, movieDatabase.movieDao())}
+        )
 
     }
+
+    override fun allTheMovies(): Array<Movie> {
+        return movieDatabase.movieDao().allTheMovies()
+    }
+
+    override fun local(): PagingSource<Int, Movie> = movieDatabase.movieDao().allMovies()
+
+
 
 
 }
