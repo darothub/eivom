@@ -1,5 +1,6 @@
 package com.darotpeacedude.eivom.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -23,6 +24,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
  */
 class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     private val binding by viewBinding(FragmentMovieDetailsBinding::bind)
+    lateinit var progressBarUpdate: ProgressBarUpdate
     private val arg: MovieDetailsFragmentArgs by navArgs()
     lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,6 +36,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         binding.backbtnIv.setOnClickListener {
             gotoUp()
         }
+        progressBarUpdate.update(false)
     }
 
     private fun setData(movie: Movie?) {
@@ -74,5 +77,9 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
                 }
             }
         })
+    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        progressBarUpdate = requireActivity() as ProgressBarUpdate
     }
 }
