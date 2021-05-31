@@ -37,6 +37,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     lateinit var moviePagingAdapter: MoviePagingAdapter
     lateinit var movieAdapter: MovieAdapter
     lateinit var progressBarUpdate: ProgressBarUpdate
+    private var mLinearLayoutManager: LinearLayoutManager? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,10 +51,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         lifecycleScope.launchWhenStarted {
             setList()
         }
-        fetchOnScrollEnd()
+        fetchOnScrollToEnd()
     }
 
-    private fun fetchOnScrollEnd() {
+    private fun fetchOnScrollToEnd() {
         binding.movieRcv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -66,7 +67,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                                 setupPagingView()
                             } else {
                                 progressBarUpdate.update(true)
-                                Toast.makeText(requireContext(), "There is no network", Toast.LENGTH_SHORT)
+                                Toast.makeText(
+                                    requireContext(),
+                                    "There is no network",
+                                    Toast.LENGTH_SHORT
+                                )
                                     .show()
                             }
                         }
@@ -97,7 +102,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             mainViewModel.remoteData().collectLatest {
                 Log.i(TAG, it.toString())
                 moviePagingAdapter.submitData(it)
-                moviePagingAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
             }
         }
     }
@@ -106,12 +110,22 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding.movieRcv.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = movieAdapter
+            binding.fab.setOnClickListener {
+                mLinearLayoutManager = LinearLayoutManager(requireContext())
+                binding.movieRcv.layoutManager = mLinearLayoutManager
+                mLinearLayoutManager!!.scrollToPosition((adapter as MovieAdapter).itemCount - 1)
+            }
         }
     }
     private fun setupPagingView() {
         binding.movieRcv.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = moviePagingAdapter
+            binding.fab.setOnClickListener {
+                mLinearLayoutManager = LinearLayoutManager(requireContext())
+                binding.movieRcv.layoutManager = mLinearLayoutManager
+                mLinearLayoutManager!!.scrollToPosition((adapter as MoviePagingAdapter).itemCount - 1)
+            }
         }
     }
 
