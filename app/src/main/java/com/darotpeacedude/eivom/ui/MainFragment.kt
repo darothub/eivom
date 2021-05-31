@@ -53,7 +53,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 setupList()
             } else {
                 setPagingList()
-                setupPagingList()
+                setupPagingView()
             }
         }
     }
@@ -78,7 +78,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             adapter = movieAdapter
         }
     }
-    private fun setupPagingList() {
+    private fun setupPagingView() {
         binding.movieRcv.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = moviePagingAdapter

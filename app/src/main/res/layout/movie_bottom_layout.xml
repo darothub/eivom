@@ -58,6 +58,10 @@
                 android:text="@string/app_name"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sdp"
+                android:singleLine="true"
+                android:maxLines="2"
+                android:ems="10"
+                android:ellipsize="end"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/vert_guideline"
                 app:layout_constraintTop_toTopOf="parent" />

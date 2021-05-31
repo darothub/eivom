@@ -38,7 +38,6 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
     private fun setData(movie: Movie?) {
         movie?.apply {
-
             binding.blurBgIv.load(Constant.BASE_IMAGE_URL + backdropPath) {
                 crossfade(true)
                 placeholder(R.drawable.sample_image)
@@ -49,6 +48,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
             }
             binding.bs.movieIv.clipToOutline = true
             binding.bs.introductionTextTv.text = overview
+            binding.bs.movieTitleTv.text = movie.title
             val rating = voteAverage / 2
             binding.bs.ratingBarRb.rating = rating.toFloat()
             binding.bs.movieRatingTv.text = "$voteAverage"
