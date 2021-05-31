@@ -19,6 +19,9 @@ interface MovieDao {
     fun allTheMovies():Array<Movie>
 
     @Query("SELECT * FROM movie")
+    suspend fun allTheMoviess():Array<Movie>
+
+    @Query("SELECT * FROM movie")
     fun allMovies(): PagingSource<Int, Movie>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

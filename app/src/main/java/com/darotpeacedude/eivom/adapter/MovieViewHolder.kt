@@ -18,7 +18,7 @@ class MovieViewHolder(private val binding: MovieItemLayoutBinding) : RecyclerVie
      */
     fun bindTo(movie: Movie?, listener: (Movie) -> Unit) {
         this.movie = movie
-        binding.movieIv.load(Constant.BASE_IMAGE_URL + movie?.backdropPath) {
+        binding.movieIv.load(Constant.BASE_IMAGE_URL + movie?.posterPath) {
             crossfade(true)
             placeholder(R.drawable.sample_image)
             transformations(RoundedCornersTransformation(10F, 10F, 10F, 10F))

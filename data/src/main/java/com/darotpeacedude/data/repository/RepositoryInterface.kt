@@ -14,6 +14,7 @@ interface RepositoryInterface {
     suspend fun getRemoteData(page:Int):ResultList
     fun allMovies():Flow<PagingData<Movie>>
     fun allTheMovies():Array<Movie>
+    suspend fun allTheMoviess():Array<Movie>
     fun local():PagingSource<Int, Movie>
 
 }

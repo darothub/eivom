@@ -40,6 +40,10 @@ class RepositoryImpl @Inject constructor(
         return movieDatabase.movieDao().allTheMovies()
     }
 
+    override suspend fun allTheMoviess(): Array<Movie> {
+       return movieDatabase.movieDao().allTheMoviess()
+    }
+
     override fun local(): PagingSource<Int, Movie> = movieDatabase.movieDao().allMovies()
 
 

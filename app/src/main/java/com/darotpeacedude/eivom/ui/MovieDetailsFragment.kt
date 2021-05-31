@@ -38,11 +38,11 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
     private fun setData(movie: Movie?) {
         movie?.apply {
-            binding.blurBgIv.load(Constant.BASE_IMAGE_URL + backdropPath) {
+            binding.blurBgIv.load(Constant.BASE_IMAGE_URL + posterPath) {
                 crossfade(true)
                 placeholder(R.drawable.sample_image)
             }
-            binding.bs.movieIv.load(Constant.BASE_IMAGE_URL + backdropPath) {
+            binding.bs.movieIv.load(Constant.BASE_IMAGE_URL + posterPath) {
                 crossfade(true)
                 placeholder(R.drawable.sample_image)
             }

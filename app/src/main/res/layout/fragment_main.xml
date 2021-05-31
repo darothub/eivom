@@ -6,13 +6,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     tools:context=".ui.MainFragment">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/purple_200"
+        android:elevation="@dimen/_10sdp"
+        android:alpha=".7"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/movie_rcv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:elevation="@dimen/_20sdp"
+        app:layout_constraintVertical_bias=".5"
+        android:layout_marginTop="@dimen/_15sdp"
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/movie_item_layout"/>
 

@@ -1,12 +1,15 @@
 package com.darotpeacedude.eivom.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.darotpeacedude.core.utils.getName
 import com.darotpeacedude.core.utils.goto
 import com.darotpeacedude.data.local.Movie
@@ -33,8 +36,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private val mainViewModel: MainViewModel by viewModels()
     lateinit var moviePagingAdapter: MoviePagingAdapter
     lateinit var movieAdapter: MovieAdapter
+    lateinit var progressBarUpdate: ProgressBarUpdate
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         moviePagingAdapter = MoviePagingAdapter {
             gotoDetailsFragment(it)
         }
@@ -44,17 +50,40 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         lifecycleScope.launchWhenStarted {
             setList()
         }
+        fetchOnScrollEnd()
+    }
+
+    private fun fetchOnScrollEnd() {
+        binding.movieRcv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+                    lifecycleScope.launch {
+                        mainViewModel.netWorkStateFlow.collectLatest {
+                            if (it) {
+                                progressBarUpdate.update(false)
+                                setPagingList()
+                                setupPagingView()
+                            } else {
+                                progressBarUpdate.update(true)
+                                Toast.makeText(requireContext(), "There is no network", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        }
+                    }
+                }
+            }
+        })
     }
 
     private suspend fun setList() {
-        mainViewModel.allMovies.collectLatest { m ->
-            if (m.isNotEmpty()) {
-                movieAdapter.setData(m.toList())
-                setupList()
-            } else {
-                setPagingList()
-                setupPagingView()
-            }
+        val local = mainViewModel.allTheMovies()
+        if (local.isNotEmpty()) {
+            movieAdapter.setData(local.toList())
+            setupList()
+        } else {
+            setPagingList()
+            setupPagingView()
         }
     }
 
@@ -65,9 +94,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private fun setPagingList() {
         lifecycleScope.launch {
-            mainViewModel.listData().collectLatest {
+            mainViewModel.remoteData().collectLatest {
                 Log.i(TAG, it.toString())
                 moviePagingAdapter.submitData(it)
+                moviePagingAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
             }
         }
     }
@@ -84,4 +114,13 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             adapter = moviePagingAdapter
         }
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        progressBarUpdate = requireActivity() as ProgressBarUpdate
+    }
+}
+
+interface ProgressBarUpdate {
+    fun update(update: Boolean)
 }

@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:background="@color/purple_200"
         android:elevation="@dimen/_10sdp"
-        android:alpha=".8"
+        android:alpha=".7"
         />
 
     <ImageView
@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/_3sdp"
         android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:src="@drawable/ic_baseline_keyboard_backspace_24"
         android:elevation="@dimen/_10sdp"
         app:layout_constraintTop_toTopOf="parent"
