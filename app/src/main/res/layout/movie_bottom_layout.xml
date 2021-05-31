@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:elevation="@dimen/_100sdp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-    app:behavior_peekHeight = "250dp"
+    app:behavior_peekHeight = "310dp"
     >
 
     <androidx.constraintlayout.widget.Guideline

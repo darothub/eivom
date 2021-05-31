@@ -51,7 +51,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
             binding.bs.movieTitleTv.text = movie.title
             val rating = voteAverage / 2
             binding.bs.ratingBarRb.rating = rating.toFloat()
-            binding.bs.movieRatingTv.text = "$voteAverage"
+            binding.bs.movieRatingTv.text = "$rating"
         }
     }
 

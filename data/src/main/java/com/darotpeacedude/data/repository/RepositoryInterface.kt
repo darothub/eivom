@@ -9,6 +9,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 interface RepositoryInterface {
+    val listOfMovies: ArrayList<Movie>
+        get() = ArrayList<Movie>()
+
     suspend fun saveMovies(movies:List<Movie>)
     suspend fun getRemoteData(page:Int):ResultList
     suspend fun allMovies():Array<Movie>

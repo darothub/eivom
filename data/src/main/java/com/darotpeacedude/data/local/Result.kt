@@ -3,7 +3,6 @@ package com.darotpeacedude.data.local
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.darotpeacedude.data.utils.Parent
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -30,4 +29,4 @@ data class Result (
     val voteAverage: Double,
     @SerializedName("vote_count")
     val voteCount: Long
-):Serializable, Parent
+):Serializable

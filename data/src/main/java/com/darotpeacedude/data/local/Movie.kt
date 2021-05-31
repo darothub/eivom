@@ -3,7 +3,6 @@ package com.darotpeacedude.data.local
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.darotpeacedude.data.utils.Parent
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 @Entity
@@ -28,4 +27,4 @@ data class Movie(
     @ColumnInfo(name="vote_average")
     @SerializedName("vote_average")
     val voteAverage: Double,
-): Serializable, Parent
+): Serializable

@@ -42,6 +42,7 @@
         android:layout_height="wrap_content"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
+        android:elevation="@dimen/_200sdp"
         android:layout_gravity="center_vertical|center_horizontal"
         app:lottie_rawRes="@raw/swipe_up_arrows" />
 
