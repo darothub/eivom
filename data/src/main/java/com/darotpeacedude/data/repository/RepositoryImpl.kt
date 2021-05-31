@@ -16,9 +16,6 @@ class RepositoryImpl @Inject constructor(
     private val networkService: NetworkService,
     private val movieDatabase: MovieDatabase
 ):RepositoryInterface {
-    override  fun getLocalData(): Flow<Array<Movie>> {
-        return movieDatabase.movieDao().getAllMovies()
-    }
 
     override suspend fun saveMovies(movies: List<Movie>) {
         movieDatabase.movieDao().saveMovies(movies)
@@ -28,23 +25,12 @@ class RepositoryImpl @Inject constructor(
         return networkService.getMovies(page=page)
     }
 
-    override fun allMovies(): Flow<PagingData<Movie>> = flow{
-        Pager(
-            config = PagingConfig(pageSize = 6),
-            pagingSourceFactory = {PagingDataRepository(networkService, movieDatabase.movieDao())}
-        )
 
-    }
 
-    override fun allTheMovies(): Array<Movie> {
-        return movieDatabase.movieDao().allTheMovies()
-    }
-
-    override suspend fun allTheMoviess(): Array<Movie> {
+    override suspend fun allMovies(): Array<Movie> {
        return movieDatabase.movieDao().allTheMoviess()
     }
 
-    override fun local(): PagingSource<Int, Movie> = movieDatabase.movieDao().allMovies()
 
 
 

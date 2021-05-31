@@ -9,12 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 interface RepositoryInterface {
-    fun getLocalData(): Flow<Array<Movie>>
     suspend fun saveMovies(movies:List<Movie>)
     suspend fun getRemoteData(page:Int):ResultList
-    fun allMovies():Flow<PagingData<Movie>>
-    fun allTheMovies():Array<Movie>
-    suspend fun allTheMoviess():Array<Movie>
-    fun local():PagingSource<Int, Movie>
-
+    suspend fun allMovies():Array<Movie>
 }
