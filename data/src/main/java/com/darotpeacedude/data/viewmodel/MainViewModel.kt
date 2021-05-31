@@ -3,15 +3,19 @@ package com.darotpeacedude.data.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.*
 import com.darotpeacedude.data.local.Movie
 import com.darotpeacedude.data.local.ResultList
 import com.darotpeacedude.data.model.ErrorResponse
+import com.darotpeacedude.data.remote.NetworkService
+import com.darotpeacedude.data.repository.PagingDataRepository
 import com.darotpeacedude.data.repository.RepositoryInterface
 import com.darotpeacedude.data.utils.Parent
 import com.darotpeacedude.data.utils.ResponseWrapper
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
@@ -23,7 +27,10 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repositoryImpl: RepositoryInterface,
+    private val networkService: NetworkService,
+    private val pagingDataRepository: PagingSource<Int, Movie>
 ) : ViewModel() {
+
 
     private val _moviesFlow = MutableStateFlow(emptyList<Parent>())
     val moviesFlow: StateFlow<List<Parent>>
@@ -33,29 +40,36 @@ class MainViewModel @Inject constructor(
         get() = _state
 
     private suspend fun getRemoteMovies(page: Int) = repositoryImpl.getRemoteData(page)
+    fun allMovies() = repositoryImpl.allMovies()
     private fun getLocalMovies() = repositoryImpl.getLocalData()
 
     suspend fun saveMovies(movies: List<Movie>) {
         repositoryImpl.saveMovies(movies)
     }
 
-    fun getSingleSourceMovies(page: Int) {
-        viewModelScope.launch {
-            getLocalMovies().collect {
-                if (it.isEmpty()) {
-                    try {
-                        val request = getRemoteMovies(page)
-                        onSuccessStateFlow(request)
-                    } catch (e: HttpException) {
-                        onErrorStateFlow(e)
-                    }
+    fun listData() = Pager(PagingConfig(pageSize = 6)) {
+        pagingDataRepository
+    }.flow.cachedIn(viewModelScope)
 
-                } else {
-                    _moviesFlow.value = it.toList()
-                }
-            }
 
-        }
+    fun getSingleSourceMovies() {
+
+//        viewModelScope.launch {
+//            getLocalMovies().collect {
+//                if (it.isEmpty()) {
+//                    try {
+//
+//                    } catch (e: HttpException) {
+//                        onErrorStateFlow(e)
+//                    }
+//
+//                } else {
+//                    val newResult: Flow<PagingData<Movie>> = repositoryImpl.allMovies()
+//                    _moviesFlow.value = it.toList()
+//                }
+//            }
+//
+//        }
     }
 
     @Synchronized
@@ -63,17 +77,8 @@ class MainViewModel @Inject constructor(
         _state.value = ResponseWrapper.Loading(message = "Loading...")
         val gson = Gson()
         val list = (r as ResultList).results.map { result ->
-            Movie(
-                result.adult,
-                result.backdropPath,
-                result.id,
-                result.originalLanguage,
-                result.overview,
-                result.posterPath,
-                result.releaseDate,
-                result.title,
-                result.voteAverage
-            )
+            val json = gson.toJson(result)
+            gson.fromJson<Movie>(json, object : TypeToken<Movie>() {}.type)
 
         }
         _moviesFlow.value = list

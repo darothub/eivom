@@ -1,7 +1,11 @@
 package com.darotpeacedude.core.di.modules.data.repository
 
+import androidx.paging.PagingSource
+import com.darotpeacedude.data.local.Movie
 import com.darotpeacedude.data.local.MovieDao
+import com.darotpeacedude.data.local.MovieDatabase
 import com.darotpeacedude.data.remote.NetworkService
+import com.darotpeacedude.data.repository.PagingDataRepository
 import com.darotpeacedude.data.repository.RepositoryImpl
 import com.darotpeacedude.data.repository.RepositoryInterface
 import dagger.Module
@@ -17,6 +21,13 @@ object RepositoryModule {
     @ActivityRetainedScoped
     fun provideRepositoryInterface(
         networkService: NetworkService,
+        movieDatabase: MovieDatabase
+    ): RepositoryInterface = RepositoryImpl(networkService, movieDatabase)
+
+    @Provides
+    @ActivityRetainedScoped
+    fun providePagingRepository(
+        networkService: NetworkService,
         movieDao: MovieDao
-    ): RepositoryInterface = RepositoryImpl(networkService, movieDao)
+    ): PagingSource<Int, Movie> = PagingDataRepository(networkService, movieDao)
 }

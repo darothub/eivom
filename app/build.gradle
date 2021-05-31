@@ -52,6 +52,7 @@ preBuild.dependsOn(formatKotlin)
 
 dependencies {
     implementation project(':core')
+
     implementation libs
     kapt kaptLibs
     coreLibraryDesugaring coreLibDesugaring

@@ -1,5 +1,7 @@
 package com.darotpeacedude.data.local
 
+import androidx.paging.DataSource
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -13,6 +15,12 @@ interface MovieDao {
     @Query("SELECT * FROM movie")
     fun getAllMovies(): Flow<Array<Movie>>
 
+    @Query("SELECT * FROM movie")
+    fun allMovies(): PagingSource<Int, Movie>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveMovies(movies:List<Movie>)
+
+    @Query("DELETE FROM movie")
+    suspend fun clearMovies()
 }
