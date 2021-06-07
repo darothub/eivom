@@ -26,7 +26,7 @@ class RecyclerviewTest {
 
     @Test
     fun testThatWhen_RecyclerView_Is_Clicked_DetailFragment_Is_Launched() {
-        //Disable animation to test
+        // Disable animation to test
         Espresso.onView(withId(R.id.movie_rcv))
             .perform(click())
 

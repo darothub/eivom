@@ -16,6 +16,7 @@ import com.darotpeacedude.eivom.R
 import com.darotpeacedude.eivom.databinding.FragmentMovieDetailsBinding
 import com.darotpeacedude.eivom.utils.viewBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlin.math.roundToInt
 
 /**
  * A simple [Fragment] subclass.
@@ -52,7 +53,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
             binding.bs.movieIv.clipToOutline = true
             binding.bs.introductionTextTv.text = overview
             binding.bs.movieTitleTv.text = movie.title
-            val rating = voteAverage / 2
+            val rating = movie?.voteAverage?.div(2)?.roundToInt()?.toFloat()
             binding.bs.ratingBarRb.rating = rating.toFloat()
             binding.bs.movieRatingTv.text = "$rating"
         }

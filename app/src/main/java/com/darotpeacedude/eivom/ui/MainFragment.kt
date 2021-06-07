@@ -48,10 +48,25 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         movieAdapter = MovieAdapter {
             gotoDetailsFragment(it)
         }
+
         lifecycleScope.launchWhenStarted {
-            setList()
+            mainViewModel.netWorkStateFlow.collectLatest {
+                if (it) {
+                    progressBarUpdate.update(false)
+                    setPagingList()
+                    setupPagingView()
+                    fetchOnScrollToEnd()
+                } else {
+                    progressBarUpdate.update(true)
+                    setList()
+                    Toast.makeText(
+                        requireContext(),
+                        "There is no network",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
-        fetchOnScrollToEnd()
     }
 
     private fun fetchOnScrollToEnd() {
@@ -59,23 +74,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
-                    lifecycleScope.launch {
-                        mainViewModel.netWorkStateFlow.collectLatest {
-                            if (it) {
-                                progressBarUpdate.update(false)
-                                setPagingList()
-                                setupPagingView()
-                            } else {
-                                progressBarUpdate.update(true)
-                                Toast.makeText(
-                                    requireContext(),
-                                    "There is no network",
-                                    Toast.LENGTH_SHORT
-                                )
-                                    .show()
-                            }
-                        }
-                    }
+                    setPagingList()
+                    setupPagingView()
                 }
             }
         })
@@ -86,26 +86,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         if (local.isNotEmpty()) {
             movieAdapter.setData(local.toList())
             setupList()
-        } else {
-            mainViewModel.netWorkStateFlow.collectLatest {
-                if (it) {
-                    progressBarUpdate.update(false)
-                    setPagingList()
-                    setupPagingView()
-                } else {
-                    if (local.isNotEmpty()) {
-                        setupList()
-                    } else {
-                        progressBarUpdate.update(true)
-                        Toast.makeText(
-                            requireContext(),
-                            "There is no network",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
-                    }
-                }
-            }
         }
     }
 
